@@ -50,8 +50,6 @@ export class CategoryStorage {
         if (searchParameters.search && searchParameters.search.trim().length !== 0) {
           let replacedSearch = searchParameters.search.replace(/[её]/g, "['е'|'ё']");
 
-          console.log(replacedSearch);
-
           queryBuilder.whereILike('name', `%${replacedSearch}%`)
             .orWhereILike('description', `%${replacedSearch}%`)
         }
