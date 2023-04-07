@@ -39,18 +39,21 @@ export class CategoryStorage {
       return this.knex('categories')
       .modify(function(queryBuilder) {
         if (searchParameters.name && searchParameters.name.trim().length !== 0) {
-          queryBuilder.whereILike('name', searchParameters.name.replace(/[её]/g, "['е'|'ё']"));
+          queryBuilder.whereILike('name', `%${searchParameters.name.replace(/[её]/g, "['е'|'ё']")}%`);
         }
         if (searchParameters.description && searchParameters.description.trim().length !== 0) {
-          queryBuilder.whereILike('description', searchParameters.description.replace(/[её]/g, "['е'|'ё']"));
+          queryBuilder.whereILike('description', `%${searchParameters.description.replace(/[её]/g, "['е'|'ё']")}%`);
         }
         if (searchParameters.active != null) {
-
           queryBuilder.where('active', Boolean(searchParameters.active));
         }
         if (searchParameters.search && searchParameters.search.trim().length !== 0) {
-          queryBuilder.whereILike('name', searchParameters.name.replace(/[её]/g, "['е'|'ё']"))
-            .whereILike('description', searchParameters.description.replace(/[её]/g, "['е'|'ё']"))
+          let replacedSearch = searchParameters.search.replace(/[её]/g, "['е'|'ё']");
+
+          console.log(replacedSearch);
+
+          queryBuilder.whereILike('name', `%${replacedSearch}%`)
+            .orWhereILike('description', `%${replacedSearch}%`)
         }
         if (searchParameters.sort && searchParameters.search.trim().length !== 0) {
 
