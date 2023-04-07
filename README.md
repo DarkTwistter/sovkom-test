@@ -33,6 +33,7 @@ $ npm install
 ```
 
 ## Running the app
+### Swagger - host:3000/docs
 
 ```bash
 # development
