@@ -38,21 +38,21 @@ export class CategoryStorage {
 
       return this.knex('categories')
       .modify(function(queryBuilder) {
-        if (searchParameters.name) {
+        if (searchParameters.name && searchParameters.name.trim().length !== 0) {
           queryBuilder.whereILike('name', searchParameters.name.replace(/[её]/g, "['е'|'ё']"));
         }
-        if (searchParameters.description) {
+        if (searchParameters.description && searchParameters.description.trim().length !== 0) {
           queryBuilder.whereILike('description', searchParameters.description.replace(/[её]/g, "['е'|'ё']"));
         }
         if (searchParameters.active != null) {
 
           queryBuilder.where('active', Boolean(searchParameters.active));
         }
-        if (searchParameters.search) {
+        if (searchParameters.search && searchParameters.search.trim().length !== 0) {
           queryBuilder.whereILike('name', searchParameters.name.replace(/[её]/g, "['е'|'ё']"))
             .whereILike('description', searchParameters.description.replace(/[её]/g, "['е'|'ё']"))
         }
-        if (searchParameters.sort) {
+        if (searchParameters.sort && searchParameters.search.trim().length !== 0) {
 
           const matches = searchParameters.sort.match(/^(-)?(.+)/); // регулярка заберет - из сортировки и само название
           if (!matches) {
